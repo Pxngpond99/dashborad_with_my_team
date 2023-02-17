@@ -8,7 +8,11 @@ quantity = df.groupby(['DEAD_YEAR(Budha)','Sex','Vehicle']).size().reset_index(n
 male = quantity[quantity['Sex'] == 'Male']
 female = quantity[quantity['Sex'] == 'Female']
 
-fig = px.line(male, x="DEAD_YEAR(Budha)", y="counts", color="Vehicle",title="Male_Graph",template="plotly_dark")
+fig1 = px.line(male, x="DEAD_YEAR(Budha)", y="counts", color="Vehicle",title="Male_Graph",template="plotly_dark")
 
 
 fig2 = px.line(female, x="DEAD_YEAR(Budha)", y="counts", color="Vehicle",title="Female_Graph",template="plotly_dark")
+
+fig = px.pie(df['Vehicle'],
+        names='Vehicle',
+        title="Pie Graph About Vehicle")

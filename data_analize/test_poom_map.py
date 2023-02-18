@@ -42,7 +42,7 @@ for x in [i for i in df_lac['ชื่อ']]:
             num = map_1.index[map_1['AccProv']==y].tolist()
             count_c.append(map_1['counts'][num[0]])
 df_lac1 = df_lac
-df_lac1['count_c'] = count_c
+df_lac1['จำนวนผู้เสียชีวิตต่อปี'] = count_c
 
 
 
@@ -67,7 +67,7 @@ df_lac1['count_c'] = count_c
 
 # fig3 = go.Figure(data=df, layout=layout)
 
-fig3 = px.scatter_geo(df_lac1,lat="lac",lon="lon",scope="asia",center=dict(lat=14.52892, lon=100.9101),hover_name="count_c",text="ขื่อ")       
+fig3 = px.scatter_geo(df_lac1,lat="lac",lon="lon",scope="asia",center=dict(lat=14.52892, lon=100.9101),hover_name="ชื่อ",hover_data=['จำนวนผู้เสียชีวิตต่อปี'],title="Mortality rate in each province")  
 
 
 

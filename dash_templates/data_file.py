@@ -20,27 +20,27 @@ df = df.dropna(subset=['DeadDate'])
 df['DeadDate'] = df['DeadDate'].astype(str)
 Month = []
 for row in df['DeadDate']:
-    if '-01-'  in row :Month.append(1) 
-    elif '-02-'  in row :Month.append(2)
-    elif '-03-'  in row :Month.append(3)
-    elif '-04-'  in row :Month.append(4)
-    elif '-05-'  in row :Month.append(5)
-    elif '-06-'  in row :Month.append(6)
-    elif '-07-'  in row :Month.append(7)
-    elif '-08-'  in row :Month.append(8)
-    elif '-09-'  in row :Month.append(9)
-    elif '-10-'  in row :Month.append(10)
-    elif '-11-'  in row :Month.append(11)
-    elif '-12-'  in row :Month.append(12)
+    if '-01-'  in row :Month.append('January')
+    elif '-02-'  in row :Month.append('February')
+    elif '-03-'  in row :Month.append('March')
+    elif '-04-'  in row :Month.append('April')
+    elif '-05-'  in row :Month.append('May')
+    elif '-06-'  in row :Month.append('June')
+    elif '-07-'  in row :Month.append('July')
+    elif '-08-'  in row :Month.append('August')
+    elif '-09-'  in row :Month.append('September')
+    elif '-10-'  in row :Month.append('October')
+    elif '-11-'  in row :Month.append('November')
+    elif '-12-'  in row :Month.append('December')
 df['Month'] = Month
 
 df['Sex'] = df['Sex'].replace([0.0 , 1.0 , 2.0 , 3.0],['Not Specified' , 'Male','Female','Not Specified'])
 df['Sex'] = df['Sex'].fillna('Not Specified')
 
 
-df_each_year = df[df['DEAD_YEAR(Budha)'] == 2554]
 
-quantity = df_each_year.groupby(['Month','Sex']).size().reset_index(name='counts')
+quantity = df.groupby(['DEAD_YEAR(Budha)','Month','Sex']).size().reset_index(name='counts')
+quantity_vehicle = df.groupby(['DEAD_YEAR(Budha)','Vehicle','Month']).size().reset_index(name='counts')
 male = quantity[quantity['Sex'] == 'Male']
 female = quantity[quantity['Sex'] == 'Female']
 
@@ -50,7 +50,8 @@ fig_line_month_sex = px.bar(quantity,
                                 y="counts", 
                                 color="Sex",
                                 title="Graph",
-                                template="plotly_dark")
+                                template="plotly_dark",
+                                )
 
 
 age_with_acci = df.groupby(['Vehicle' , 'Age_Range']).size().reset_index(name='counts')

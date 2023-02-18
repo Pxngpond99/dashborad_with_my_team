@@ -23,36 +23,7 @@ app.layout = html.Div(
                     style={
                         "textAlign": "center",
                     },
-                ),
-            ],
-            className="row",
-        ),
-        html.Div(
-                    [
-                        dcc.Graph(id="pie-graph"),
-                        dcc.Graph(id="line-graph"),
-                        html.Div(
-                    [dcc.Graph(id="example-graph-2", figure=fig_line_month_sex)],
-                    [dcc.Graph(id="example-graph-3", figure=fig_line_month_sex)],className="col"
-                ),
-                    ],
-                    className="col-6",
-                ),
-        html.Div(
-                    [
-                        dcc.Slider(
-                            df["DEAD_YEAR(Budha)"].min(),
-                            df["DEAD_YEAR(Budha)"].max(),
-                            step=None,
-                            value=df["DEAD_YEAR(Budha)"].min(),
-                            marks={str(year): str(year) for year in df["DEAD_YEAR(Budha)"].unique()},
-                            id="year-slider",
-                        ),
-                    ],
-                    style={"padding-top": "20px;"},
-                    className="col-sm",
-                ),
-        html.Div(
+                ), html.Div(
                     [
                         dcc.Dropdown(
                             options=[x for x in df["DEAD_YEAR(Budha)"].unique()],
@@ -60,10 +31,40 @@ app.layout = html.Div(
                             id='dd-output-container',
                         )
                     ],
-                    style={"padding-top": "20px;"},
+                    style={"top": "20px;"},
                     className="col-sm",
                     
                 ),
+            ],
+            className="row",
+        ),
+       
+        html.Div(
+                    [
+                        dcc.Graph(id="line-graph"),
+                        dcc.Graph(id="pie-graph"),
+                        dcc.Graph(id="bar-graph"),
+                        html.Div(
+                    [dcc.Graph(id="example-graph-3", figure=fig_line_month_sex)],className="col"
+                ),
+                    ],
+                    className="col-6",
+                ),
+        # html.Div(
+        #             [
+        #                 dcc.Slider(
+        #                     df["DEAD_YEAR(Budha)"].min(),
+        #                     df["DEAD_YEAR(Budha)"].max(),
+        #                     step=None,
+        #                     value=df["DEAD_YEAR(Budha)"].min(),
+        #                     marks={str(year): str(year) for year in df["DEAD_YEAR(Budha)"].unique()},
+        #                     id="year-slider",
+        #                 ),
+        #             ],
+        #             style={"padding-top": "20px;"},
+        #             className="col-sm",
+        #         ),
+        
         # html.Div(
         #     children=[
         #         html.Div(

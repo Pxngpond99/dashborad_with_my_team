@@ -45,8 +45,9 @@ app.layout = html.Div(
                 html.Div(
                     [dcc.Graph(id="vehicle-bar-graph")], className="col-6"
                 ),
-
-            ],
+            ],style={
+                         "margin":"10px "
+                    },
             className="row",
         ),
         html.Div(
@@ -57,8 +58,9 @@ app.layout = html.Div(
                 html.Div(
                     [dcc.Graph(id="sex-bar-graph"),], className="col-6"
                 ),
-
-            ],
+            ],style={
+                         "margin":"10px "
+                    },
             className="row",
         ),
         # html.Div(
@@ -79,7 +81,9 @@ app.layout = html.Div(
     
         html.Div(children=[
                 html.Div(
-                    [dcc.Graph(id="Map-graph"),],
+                    [dcc.Graph(id="Map-graph"),],className="col-6",style={
+                         "margin":"10px 24vw "
+                    },
                 ),
                 
 

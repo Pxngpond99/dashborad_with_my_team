@@ -80,7 +80,9 @@ def show_data(selected_year):
     df_lac1['จำนวนผู้เสียชีวิตต่อปี'] = count_c
 
     
-    fig3 = px.scatter_geo(df_lac1,lat="lac",lon="lon",scope="asia",center=dict(lat=14.52892, lon=100.9101),hover_name="ชื่อ",hover_data=['จำนวนผู้เสียชีวิตต่อปี'],title="Mortality rate in each province")  
+    fig3 = px.scatter_geo(df_lac1,lat="lac",lon="lon",scope="asia",center=dict(lat=14.52892, lon=100.9101)
+                          ,hover_name="ชื่อ",hover_data=['จำนวนผู้เสียชีวิตต่อปี'],title="Mortality rate in each province {}".format(selected_year),
+                          template="ggplot2")  
 
     return fig3
 

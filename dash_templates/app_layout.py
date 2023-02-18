@@ -32,7 +32,8 @@ app.layout = html.Div(
                         dcc.Graph(id="pie-graph"),
                         dcc.Graph(id="line-graph"),
                         html.Div(
-                    [dcc.Graph(id="example-graph-2", figure=fig_line_month_sex)], className="col"
+                    [dcc.Graph(id="example-graph-2", figure=fig_line_month_sex)],
+                    [dcc.Graph(id="example-graph-3", figure=fig_line_month_sex)],className="col"
                 ),
                     ],
                     className="col-6",

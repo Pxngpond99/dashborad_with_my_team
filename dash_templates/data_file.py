@@ -1,8 +1,9 @@
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
-df= pd.read_excel("data_analize/data/dead_conso-3-54-65.xlsx",usecols=['id','DEAD_YEAR(Budha)','Sex','Vehicle','Age','DeadDate','AccProv'])
-
+df= pd.read_excel("data_analize/data/dead_conso-3-54-65.xlsx",usecols=['DEAD_YEAR(Budha)','Sex','Vehicle','Age','DeadDate','AccProv'])
+df_map = pd.read_csv("data_analize/data/laclon.csv")
 df = df[df["Age"] >= 1]
 
 Age_Range = []
@@ -50,5 +51,6 @@ fig_line_month_sex = px.bar(quantity,
                                 color="Sex",
                                 title="Graph",
                                 template="plotly_dark")
+
 
 age_with_acci = df.groupby(['Vehicle' , 'Age_Range']).size().reset_index(name='counts')

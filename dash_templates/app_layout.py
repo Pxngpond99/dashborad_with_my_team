@@ -1,21 +1,7 @@
 import dash_bootstrap_components as dbc
-from dash import Dash, dcc,html ,Input, Output
+from dash import Dash, dcc,html
 from data_file import *
 app = Dash(__name__, external_stylesheets=[dbc.themes.SLATE])
-
-
-# @app.callback(Output("pie-graph", "figure"), Input("year-slider", "value"))
-# def show_data(selected_year):
-#     filtered_df = quantity[quantity.DEAD_YEAR == selected_year]
-
-#     fig = px.pie(
-#         filtered_df,
-#         values="Vehicle",
-#         names=male,
-#         color=male,
-#         title="Pie Graph About Energy Sector",
-#     )
-#     return fig
 
 app.layout = html.Div(
     children=[
@@ -41,38 +27,53 @@ app.layout = html.Div(
             ],
             className="row",
         ),
-        # html.Div(
-        #             [
-        #                 dcc.Graph(id="pie-graph"),
-
-        #             ],
-        #             # className="col-6",
-        #         ),
-        # html.Div(
-        #             [
-        #                 dcc.Slider(
-        #                     df["DEAD_YEAR"].min(),
-        #                     df["DEAD_YEAR"].max(),
-        #                     step=None,
-        #                     value=df["DEAD_YEAR"].min(),
-        #                     marks={str(year): str(year) for year in df["DEAD_YEAR"].unique()},
-        #                     id="year-slider",
-        #                 ),
-        #             ],
-        #             style={"padding-top": "20px;"},
-        #             # className="col-sm",
-        #         ),
         html.Div(
-            children=[
-                html.Div(
-                    [dcc.Graph(id="example-graph-1", figure=fig)], className="col"
+                    [
+                        dcc.Graph(id="pie-graph"),
+                        dcc.Graph(id="line-graph"),
+                        html.Div(
+                    [dcc.Graph(id="example-graph-2", figure=fig_line_month_sex)], className="col"
                 ),
-                html.Div(
-                    [dcc.Graph(id="example-graph-2", figure=fig2)], className="col"
+                    ],
+                    className="col-6",
                 ),
-            ],
-            className="row",
-        ),
+        html.Div(
+                    [
+                        dcc.Slider(
+                            df["DEAD_YEAR(Budha)"].min(),
+                            df["DEAD_YEAR(Budha)"].max(),
+                            step=None,
+                            value=df["DEAD_YEAR(Budha)"].min(),
+                            marks={str(year): str(year) for year in df["DEAD_YEAR(Budha)"].unique()},
+                            id="year-slider",
+                        ),
+                    ],
+                    style={"padding-top": "20px;"},
+                    className="col-sm",
+                ),
+        html.Div(
+                    [
+                        dcc.Dropdown(
+                            options=[x for x in df["DEAD_YEAR(Budha)"].unique()],
+                            value=df["DEAD_YEAR(Budha)"].min(),
+                            id='dd-output-container',
+                        )
+                    ],
+                    style={"padding-top": "20px;"},
+                    className="col-sm",
+                    
+                ),
+        # html.Div(
+        #     children=[
+        #         html.Div(
+        #             [dcc.Graph(id="example-graph-1", figure=fig)], className="col"
+        #         ),
+        #         html.Div(
+        #             [dcc.Graph(id="example-graph-2", figure=fig2)], className="col"
+        #         ),
+        #     ],
+        #     className="row",
+        # ),
         html.Div([
             html.Button("Hello", className="btn btn-primary")
         ],className="row",

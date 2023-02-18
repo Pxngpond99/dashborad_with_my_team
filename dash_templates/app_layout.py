@@ -28,7 +28,7 @@ app.layout = html.Div(
                         dcc.Dropdown(
                             options=[x for x in df["DEAD_YEAR(Budha)"].unique()],
                             value=df["DEAD_YEAR(Budha)"].min(),
-                            id='dd-output-container',
+                            id='dd-output-container',clearable=False
                         ),
                     ],
                     style={"top": "20px;","margin": "0 30vw 10px 30vw",},

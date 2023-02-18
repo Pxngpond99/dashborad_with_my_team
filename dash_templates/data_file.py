@@ -38,21 +38,6 @@ df['Sex'] = df['Sex'].replace([0.0 , 1.0 , 2.0 , 3.0],['Not Specified' , 'Male',
 df['Sex'] = df['Sex'].fillna('Not Specified')
 
 
-
 quantity = df.groupby(['DEAD_YEAR(Budha)','Month','Sex']).size().reset_index(name='counts')
 quantity_vehicle = df.groupby(['DEAD_YEAR(Budha)','Vehicle','Month']).size().reset_index(name='counts')
-male = quantity[quantity['Sex'] == 'Male']
-female = quantity[quantity['Sex'] == 'Female']
-
-
-fig_line_month_sex = px.bar(quantity, 
-                                x='Month', 
-                                y="counts", 
-                                color="Sex",
-                                title="Graph",
-                                template="plotly_dark",
-                                category_orders={"Month": ['January', 'February', 'March', 'April','May','June','July','August','September','October','November','December']}
-                                )
-
-
 age_with_acci = df.groupby(['DEAD_YEAR(Budha)','Vehicle' , 'Age_Range']).size().reset_index(name='counts')

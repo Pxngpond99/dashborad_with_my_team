@@ -1,5 +1,5 @@
 import dash_bootstrap_components as dbc
-from dash import Dash, dcc,html
+from dash import Dash, dcc,html ,dash_table
 from data_file import *
 app = Dash(__name__, external_stylesheets=[dbc.themes.SLATE])
 
@@ -8,7 +8,7 @@ app.layout = html.Div(
         html.Div(
             children=[
                 html.H1(
-                    children="Hello Dash",
+                    children="Statistics of Road Traffic Fatalities in 2554-2565",
                     style={
                         "textAlign": "center",
                     },
@@ -19,65 +19,71 @@ app.layout = html.Div(
         html.Div(
             children=[
                 html.Div(
-                    children="Dash: A web application framework for your data.",
+                    children="Select years for view data",
                     style={
-                        "textAlign": "center",
+                        "textAlign": "center","margin":"10px"
                     },
-                ),
-            ],
-            className="row",
-        ),
-        html.Div(
-                    [
-                        dcc.Graph(id="pie-graph"),
-                        dcc.Graph(id="line-graph"),
-                        html.Div(
-                    [dcc.Graph(id="example-graph-2", figure=fig_line_month_sex)],
-                    [dcc.Graph(id="example-graph-3", figure=fig_line_month_sex)],className="col"
-                ),
-                    ],
-                    className="col-6",
-                ),
-        html.Div(
-                    [
-                        dcc.Slider(
-                            df["DEAD_YEAR(Budha)"].min(),
-                            df["DEAD_YEAR(Budha)"].max(),
-                            step=None,
-                            value=df["DEAD_YEAR(Budha)"].min(),
-                            marks={str(year): str(year) for year in df["DEAD_YEAR(Budha)"].unique()},
-                            id="year-slider",
-                        ),
-                    ],
-                    style={"padding-top": "20px;"},
-                    className="col-sm",
-                ),
-        html.Div(
+                ), html.Div(
                     [
                         dcc.Dropdown(
                             options=[x for x in df["DEAD_YEAR(Budha)"].unique()],
                             value=df["DEAD_YEAR(Budha)"].min(),
                             id='dd-output-container',
-                        )
+                        ),
                     ],
-                    style={"padding-top": "20px;"},
+                    style={"top": "20px;","margin": "0 30vw 10px 30vw",},
                     className="col-sm",
-                    
                 ),
+            ],
+            className="row",
+        ),
+        html.Div(
+            children=[
+                html.Div(
+                    [dcc.Graph(id="line-graph"),], className="col-6"
+                ),
+                html.Div(
+                    [dcc.Graph(id="vehicle-bar-graph")], className="col-6"
+                ),
+
+            ],
+            className="row",
+        ),
+        html.Div(
+            children=[
+                html.Div(
+                    [dcc.Graph(id="pie-graph"),], className="col-6"
+                ),
+                html.Div(
+                    [dcc.Graph(id="sex-bar-graph"),], className="col-6"
+                ),
+
+            ],
+            className="row",
+        ),
         # html.Div(
-        #     children=[
-        #         html.Div(
-        #             [dcc.Graph(id="example-graph-1", figure=fig)], className="col"
+        #             [
+        #                 dcc.Slider(
+        #                     df["DEAD_YEAR(Budha)"].min(),
+        #                     df["DEAD_YEAR(Budha)"].max(),
+        #                     step=None,
+        #                     value=df["DEAD_YEAR(Budha)"].min(),
+        #                     marks={str(year): str(year) for year in df["DEAD_YEAR(Budha)"].unique()},
+        #                     id="year-slider",
+        #                 ),
+        #             ],
+        #             style={"padding-top": "20px;"},
+        #             className="col-sm",
         #         ),
-        #         html.Div(
-        #             [dcc.Graph(id="example-graph-2", figure=fig2)], className="col"
-        #         ),
-        #     ],
-        #     className="row",
-        # ),
-        html.Div([
-            html.Button("Hello", className="btn btn-primary")
-        ],className="row",
+        
+    
+        html.Div(children=[
+                html.Div(
+                    [dcc.Graph(id="Map-graph"),],
+                ),
+                
+
+            ],
         ),
         
     ]

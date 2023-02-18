@@ -2,15 +2,18 @@ from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas
-
+import geopandas as gpd
+import shapely
+import matplotlib.pyplot as plt
+import plotly.graph_objs as go
 app = Dash(__name__, external_stylesheets=[dbc.themes.QUARTZ])
 
 colors = {"background": "#111111", "text": "#7FDBFF"}
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
-df = pandas.read_excel("dashborad_with_my_team\data\dead_conso-3-54-65.xlsx")
-quantity = df.groupby(['DEAD_YEAR(Budha)','Sex','Vehicle']).size().reset_index(name='counts')
+# df = pandas.read_excel("dashborad_with_my_team\data\dead_conso-3-54-65.xlsx")
+# quantity = df.groupby(['DEAD_YEAR(Budha)','Sex','Vehicle']).size().reset_index(name='counts')
 # df.columns = [
 #     "BE",
 #     "emission_type",
@@ -19,15 +22,59 @@ quantity = df.groupby(['DEAD_YEAR(Budha)','Sex','Vehicle']).size().reset_index(n
 #     "en_sub_category",
 #     "quantity",
 # 
-male = quantity[quantity['Sex'] == 1.0]
-female = quantity[quantity['Sex'] == 2.0]
+# male = quantity[quantity['Sex'] == 1.0]
+# female = quantity[quantity['Sex'] == 2.0]
+
+df = pandas.read_csv("dashborad_with_my_team\laclon.csv")
+df_1 = df
 
 
 
-fig = px.line(male, x="DEAD_YEAR(Budha)", y="counts", color="Vehicle",title="Male_Graph")
 
 
-fig2 = px.line(female, x="DEAD_YEAR(Budha)", y="counts", color="Vehicle",title="Female_Graph")
+
+
+
+
+
+
+
+
+
+
+
+
+
+# initialize an axis
+# fig, ax = plt.subplots(figsize=(8,6))
+# # plot map on axis
+# countries = gpd.read_file(  
+#      gpd.datasets.get_path("naturalearth_lowres"))
+# countries[countries["name"] == "Thailand"].plot(color="lightgrey",
+#                                                  ax=ax)
+# # plot points
+# df.plot(x="lon", y="lac", kind="scatter", ax=ax)
+# layout = go.Layout(
+#     geo = dict(
+#         center = dict(lon=-0.1262, lat=51.5074), # set the center to London
+#         scope = "world",
+#         projection_type = "equirectangular",
+#         zoom = 3 # set the zoom level to 3
+#     )
+# )
+
+# fig3 = go.Figure(data=df, layout=layout)
+
+fig3 = px.scatter_geo(df_1,lat="lac",lon="lon",scope="asia",center=dict(lat=14.52892, lon=100.9101),hover_name="ชื่อ")       
+
+
+
+# fig = px.line(male, x="DEAD_YEAR(Budha)", y="counts", color="Vehicle",title="Male_Graph")
+
+
+# fig2 = px.line(female, x="DEAD_YEAR(Budha)", y="counts", color="Vehicle",title="Female_Graph")
+
+
 
 app.layout = html.Div(
     children=[
@@ -56,10 +103,10 @@ app.layout = html.Div(
         html.Div(
             children=[
                 html.Div(
-                    [dcc.Graph(id="example-graph-1", figure=fig)], className="col"
+                    [dcc.Graph(id="example-graph-1", figure=fig3)], className="col"
                 ),
                 html.Div(
-                    [dcc.Graph(id="example-graph-2", figure=fig2)], className="col"
+                    [dcc.Graph(id="example-graph-2", figure=fig3)], className="col"
                 ),
             ],
             className="row",

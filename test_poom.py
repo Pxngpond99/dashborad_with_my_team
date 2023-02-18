@@ -1,7 +1,7 @@
 from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 import plotly.express as px
-import pandas
+import pandas as pd
 import geopandas as gpd
 import shapely
 import matplotlib.pyplot as plt
@@ -12,7 +12,14 @@ colors = {"background": "#111111", "text": "#7FDBFF"}
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
-# df = pandas.read_excel("dashborad_with_my_team\data\dead_conso-3-54-65.xlsx")
+df= pd.read_excel("dead_conso-3-54-65.xlsx",usecols=['DEAD_YEAR(Budha)','Sex','Vehicle','Age','DeadDate','AccProv'])
+df_1 = df[df["Age"] >= 1]
+df_2 = df_1.dropna(subset=['DeadDate'])
+df_2['AccProv'] = df_2['AccProv'].replace('ไม่ทราบจังหวัด','กรุงเทพมหานคร')
+map = df_2.groupby(['DEAD_YEAR(Budha)','AccProv']).size().reset_index(name='counts')
+map_1 = map[map["DEAD_YEAR(Budha)"] == 2554]
+
+
 # quantity = df.groupby(['DEAD_YEAR(Budha)','Sex','Vehicle']).size().reset_index(name='counts')
 # df.columns = [
 #     "BE",
@@ -25,9 +32,17 @@ colors = {"background": "#111111", "text": "#7FDBFF"}
 # male = quantity[quantity['Sex'] == 1.0]
 # female = quantity[quantity['Sex'] == 2.0]
 
-df = pandas.read_csv("dashborad_with_my_team\laclon.csv")
-df_1 = df
-
+df_lac = pd.read_csv("dashborad_with_my_team\laclon.csv")
+count_c = []
+num = []
+for x in [i for i in df_lac['ชื่อ']]:
+    for y in [j for j in map_1['AccProv']]:
+        
+        if x == y:
+            num = map_1.index[map_1['AccProv']==y].tolist()
+            count_c.append(map_1['counts'][num[0]])
+df_lac1 = df_lac
+df_lac1['count_c'] = count_c
 
 
 
@@ -65,7 +80,7 @@ df_1 = df
 
 # fig3 = go.Figure(data=df, layout=layout)
 
-fig3 = px.scatter_geo(df_1,lat="lac",lon="lon",scope="asia",center=dict(lat=14.52892, lon=100.9101),hover_name="ชื่อ")       
+fig3 = px.scatter_geo(df_lac1,lat="lac",lon="lon",scope="asia",center=dict(lat=14.52892, lon=100.9101),hover_name="ชื่อ",text="count_c")       
 
 
 

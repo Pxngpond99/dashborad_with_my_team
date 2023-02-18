@@ -1,5 +1,5 @@
 import dash_bootstrap_components as dbc
-from dash import Dash, dcc,html
+from dash import Dash, dcc,html ,dash_table
 from data_file import *
 app = Dash(__name__, external_stylesheets=[dbc.themes.SLATE])
 
@@ -8,7 +8,7 @@ app.layout = html.Div(
         html.Div(
             children=[
                 html.H1(
-                    children="Hello Dash",
+                    children="Statistics of Road Traffic Fatalities in 2554-2565",
                     style={
                         "textAlign": "center",
                     },
@@ -19,9 +19,9 @@ app.layout = html.Div(
         html.Div(
             children=[
                 html.Div(
-                    children="Dash: A web application framework for your data.",
+                    children="Select years for view data",
                     style={
-                        "textAlign": "center",
+                        "textAlign": "center","margin":"10px"
                     },
                 ), html.Div(
                     [
@@ -29,27 +29,38 @@ app.layout = html.Div(
                             options=[x for x in df["DEAD_YEAR(Budha)"].unique()],
                             value=df["DEAD_YEAR(Budha)"].min(),
                             id='dd-output-container',
-                        )
+                        ),
                     ],
-                    style={"top": "20px;"},
+                    style={"top": "20px;","margin": "0 30vw 10px 30vw",},
                     className="col-sm",
-                    
                 ),
             ],
             className="row",
         ),
-       
         html.Div(
-                    [
-                        dcc.Graph(id="line-graph"),
-                        dcc.Graph(id="pie-graph"),
-                        dcc.Graph(id="bar-graph"),
-                        html.Div(
-                    [dcc.Graph(id="example-graph-3", figure=fig_line_month_sex)],className="col"
+            children=[
+                html.Div(
+                    [dcc.Graph(id="line-graph"),], className="col-6"
                 ),
-                    ],
-                    className="col-6",
+                html.Div(
+                    [dcc.Graph(id="vehicle-bar-graph")], className="col-6"
                 ),
+
+            ],
+            className="row",
+        ),
+        html.Div(
+            children=[
+                html.Div(
+                    [dcc.Graph(id="pie-graph"),], className="col-6"
+                ),
+                html.Div(
+                    [dcc.Graph(id="sex-bar-graph"),], className="col-6"
+                ),
+
+            ],
+            className="row",
+        ),
         # html.Div(
         #             [
         #                 dcc.Slider(
@@ -65,20 +76,11 @@ app.layout = html.Div(
         #             className="col-sm",
         #         ),
         
-        # html.Div(
-        #     children=[
-        #         html.Div(
-        #             [dcc.Graph(id="example-graph-1", figure=fig)], className="col"
-        #         ),
-        #         html.Div(
-        #             [dcc.Graph(id="example-graph-2", figure=fig2)], className="col"
-        #         ),
-        #     ],
-        #     className="row",
-        # ),
+    
         html.Div([
-            html.Button("Hello", className="btn btn-primary")
-        ],className="row",
+            
+
+        ],
         ),
         
     ]
